@@ -89,13 +89,24 @@
     background: var(--bg3); border: 1px solid var(--border2);
     cursor: pointer; display: flex; align-items: center; justify-content: center;
     transition: background 0.2s, border-color 0.2s;
-    flex-shrink: 0;
+    flex-shrink: 0; outline: none; padding: 0;
   }
   .theme-toggle:hover { background: var(--bg2); border-color: var(--muted); }
-  .theme-toggle svg { width: 16px; height: 16px; fill: var(--muted); transition: fill 0.2s; }
-  .theme-toggle:hover svg { fill: var(--text); }
-  .icon-moon { display: block; }
+  .theme-toggle:focus-visible { box-shadow: 0 0 0 2px var(--accent); }
+  .theme-toggle svg {
+    width: 16px; height: 16px;
+    fill: none; stroke: var(--muted);
+    stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+    transition: stroke 0.2s;
+    display: block;
+  }
+  .theme-toggle:hover svg { stroke: var(--text); }
+  /* moon uses fill, not stroke */
+  .icon-moon { fill: var(--muted) !important; stroke: none !important; }
+  .theme-toggle:hover .icon-moon { fill: var(--text) !important; }
+  .icon-moon-path { fill: inherit; }
   .icon-sun  { display: none; }
+  .icon-moon { display: block; }
   [data-theme="light"] .icon-moon { display: none; }
   [data-theme="light"] .icon-sun  { display: block; }
 
@@ -434,21 +445,21 @@
     <span class="nav-tag">April 2026</span>
   </div>
   <button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark mode">
-    <!-- moon icon (shown in dark mode) -->
+    <!-- moon: filled shape, shown in dark mode -->
     <svg class="icon-moon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      <path class="icon-moon-path" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
     </svg>
-    <!-- sun icon (shown in light mode) -->
-    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" xmlns="http://www.w3.org/2000/svg" style="fill:none">
-      <circle cx="12" cy="12" r="5" fill="currentColor" stroke="none"/>
-      <line x1="12" y1="1" x2="12" y2="3"/>
-      <line x1="12" y1="21" x2="12" y2="23"/>
-      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
-      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-      <line x1="1" y1="12" x2="3" y2="12"/>
-      <line x1="21" y1="12" x2="23" y2="12"/>
-      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
-      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+    <!-- sun: stroked lines, shown in light mode -->
+    <svg class="icon-sun" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="12" cy="12" r="4.5"/>
+      <line x1="12" y1="2"    x2="12" y2="5"/>
+      <line x1="12" y1="19"   x2="12" y2="22"/>
+      <line x1="4.22" y1="4.22" x2="6.34" y2="6.34"/>
+      <line x1="17.66" y1="17.66" x2="19.78" y2="19.78"/>
+      <line x1="2"  y1="12" x2="5"  y2="12"/>
+      <line x1="19" y1="12" x2="22" y2="12"/>
+      <line x1="4.22" y1="19.78" x2="6.34" y2="17.66"/>
+      <line x1="17.66" y1="6.34" x2="19.78" y2="4.22"/>
     </svg>
   </button>
 </nav>
